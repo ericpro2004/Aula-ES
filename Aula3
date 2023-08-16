@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+
+// Listas tipos com nó.
+
+// Declaração da lista.
+
+//Função que insere um nó na lista.
+
+struct no {
+    int numero;
+    struct no *proximo;
+};
+
+struct no *cabeca = NULL;
+
+    int numero;
+
+void inserir()
+{
+    setlocale (LC_ALL, "");
+
+    struct no *novoNo = (struct no *) malloc(sizeof(struct no));
+    novoNo -> numero = numero;
+    novoNo -> proximo = NULL;
+
+    if (cabeca == NULL) {
+        cabeca = novoNo;
+    } else {
+
+        struct no *ponteiro= cabeca;
+
+        while (ponteiro -> proximo !=NULL) {
+            ponteiro = ponteiro -> proximo;
+        }
+        ponteiro -> proximo = novoNo;
+    }
+}
+
+void imprimir() {
+
+    printf("=========\n");
+
+    struct no *ponteiro = cabeca;
+
+    while(ponteiro != NULL) {
+    printf("%d\n", ponteiro -> proximo);
+    ponteiro = ponteiro -> proximo;
+
+    }
+}
+
+void remover(int numero) {
+    if (cabeca -> numero == numero) {
+        struct no *ponteiroExcluir = cabeca;
+        cabeca = cabeca -> proximo;
+        free (ponteiroExcluir);
+    } else {
+
+    struct no *ponteiroAnterior = cabeca;
+
+    while ((ponteiroAnterior -> proximo != NULL) &&
+            (ponteiroAnterior ->  proximo -> numero != numero)) {
+                ponteiroAnterior = ponteiroAnterior -> proximo;
+    }
+    if (ponteiroAnterior -> proximo != NULL) {
+        struct no *ponteiroExcluir = ponteiroAnterior -> proximo;
+        ponteiroAnterior -> proximo = ponteiroExcluir -> proximo;
+        free(ponteiroExcluir);
+        }
+    }
+}
+
+int main(int argc, char *argv[]) {
+    inserir(1);
+    inserir(2);
+    inserir(3);
+    inserir(4);
+    inserir(5);
+    inserir(6);
+
+    imprimir();
+
+    remover(100);
+    remover(1);
+    remover(3);
+    remover(6);
+
+
+    imprimir();
+}
